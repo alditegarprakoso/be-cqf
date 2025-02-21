@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone');
             $table->string('total_donation');
-            $table->string('info');
-            $table->string('status');
-            $table->string('attachment');
+            $table->string('info')->nullable();
+            $table->string('status')->nullable();
+            $table->string('attachment')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('donation_id')->references('id')->on('donations')->onDelete('cascade');

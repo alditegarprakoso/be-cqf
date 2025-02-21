@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('category_id'); // unsignedBigInteger() untuk foreign key
             $table->string('title');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('target_amount');
             $table->string('bank_account');
-            $table->string('status');
-            $table->string('thumbnail');
+            $table->string('status')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('category_id')->references('id')->on('donation_categories')->onDelete('cascade');
