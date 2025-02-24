@@ -1,20 +1,25 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DonationCategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    // User Routes
     Route::get('/users', [UserController::class, 'index']);
     Route::post('/users', [UserController::class, 'store']);
     Route::put('/users/{id}', [UserController::class, 'update']);
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
+
+    // Donation Categories Routes
+    Route::get('/donation-categories', [DonationCategoryController::class, 'index']);
+    Route::get('/donation-categories/{id}', [DonationCategoryController::class, 'show']);
+    Route::post('/donation-categories', [DonationCategoryController::class, 'store']);
+    Route::put('/donation-categories/{id}', [DonationCategoryController::class, 'update']);
+    Route::delete('/donation-categories/{id}', [DonationCategoryController::class, 'destroy']);
 });
