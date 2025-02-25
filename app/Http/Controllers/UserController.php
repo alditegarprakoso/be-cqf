@@ -47,6 +47,8 @@ class UserController extends Controller
         try {
             $user = User::findOrFail($id);
 
+            $user->photo = $user->photo ? asset($user->photo) : $user->photo;
+
             return response()->json([
                 'success' => true,
                 'message' => 'Data user berhasil diambil',
@@ -113,7 +115,7 @@ class UserController extends Controller
                 }
 
                 $photoPath = $request->file('photo')->store('uploads/user', 'public');
-                $userData['photo'] = $photoPath;
+                $userData['photo'] = 'storage/' . $photoPath;
             }
 
             $user->update($userData);
@@ -133,8 +135,12 @@ class UserController extends Controller
         try {
             $user = User::findOrFail($id);
 
-            if ($user->photo && Storage::disk('public')->exists($user->photo)) {
-                Storage::disk('public')->delete($user->photo);
+            if ($user->photo) {
+                $photoPath = str_replace('storage/', '', $user->photo);
+
+                if (Storage::disk('public')->exists($photoPath)) {
+                    Storage::disk('public')->delete($photoPath);
+                }
             }
 
             $user->delete();
