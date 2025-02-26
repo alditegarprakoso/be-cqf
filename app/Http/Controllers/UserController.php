@@ -23,7 +23,7 @@ class UserController extends Controller
                 ->paginate($perPage);
 
             $users->getCollection()->transform(function ($user) {
-                $user->photo = $user->photo ? asset($user->photo) : null;
+                $user->photo = $user->photo ? asset($user->photo) : $user->photo;
                 return $user;
             });
 
