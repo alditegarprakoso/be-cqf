@@ -107,7 +107,7 @@ class UserController extends Controller
             ]);
 
             $user = User::findOrFail($id);
-            $userData = $request->only('name', 'email', 'password', 'position', 'status', 'photo');
+            $userData = $request->only('name', 'email', 'position', 'status', 'photo');
 
             if ($request->hasFile('photo')) {
                 if ($user->photo) {
@@ -124,7 +124,7 @@ class UserController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Gagal mengupdate post',
+                'message' => 'Gagal mengupdate user',
                 'errors' => $e->getMessage(),
             ], 500);
         }
