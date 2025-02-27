@@ -15,10 +15,12 @@ class DonationController extends Controller
             $perPage = $request->query('per_page', 10);
             $search = $request->query('search', '');
 
-            $donations = Donation::when($search, function ($query) use ($search) {
-                return $query->where('title', 'like', "%$search%");
-            })
-                ->paginate($perPage);
+            $donations = Donation::with('donationCategory')
+                ->when($search, function ($query) use ($search) {
+                    return $query->where(function ($q) use ($search) {
+                        $q->where('title', 'like', "%$search%");
+                    });
+                })->paginate($perPage);
 
             $donations->getCollection()->transform(function ($donation) {
                 $donation->thumbnail = $donation->thumbnail ? asset($donation->thumbnail) : $donation->thumbnail;
@@ -42,7 +44,7 @@ class DonationController extends Controller
     public function show($id)
     {
         try {
-            $donation = Donation::findOrFail($id);
+            $donation = Donation::with('donationCategory')->findOrFail($id);
 
             $donation->thumbnail = $donation->thumbnail ? asset($donation->thumbnail) : $donation->thumbnail;
 
@@ -64,10 +66,10 @@ class DonationController extends Controller
     {
         try {
             $request->validate([
-                'category_id' => 'required|number|max:255',
+                'category_id' => 'required|string|max:255',
                 'title' => 'required|string|max:255',
                 'description' => 'nullable|string|max:255',
-                'target_amount' => 'required|number',
+                'target_amount' => 'required|string',
                 'bank_account' => 'required|string|max:255',
                 'status' => 'required|string|max:255',
                 'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -102,7 +104,7 @@ class DonationController extends Controller
                 'target_amount' => 'required|number',
                 'bank_account' => 'required|string|max:255',
                 'status' => 'required|string|max:255',
-                'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
 
             $donation = Donation::findOrFail($id);

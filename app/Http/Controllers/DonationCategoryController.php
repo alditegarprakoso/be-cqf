@@ -14,9 +14,15 @@ class DonationCategoryController extends Controller
             $perPage = $request->query('per_page', 10);
             $search = $request->query('search', '');
 
-            $categories = DonationCategory::when($search, function ($query) use ($search) {
+            $query = DonationCategory::when($search, function ($query) use ($search) {
                 return $query->where('name', 'like', "%$search%");
-            })->paginate($perPage);
+            });
+
+            if ($perPage === 'all') {
+                $categories = $query->get();
+            } else {
+                $categories = $query->paginate((int) $perPage);
+            }
 
             return response()->json([
                 'success' => true,

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Donation extends Model
 {
@@ -15,4 +16,9 @@ class Donation extends Model
         'status',
         'thumbnail',
     ];
+
+    public function donationCategory(): BelongsTo
+    {
+        return $this->belongsTo(DonationCategory::class, 'category_id');
+    }
 }
