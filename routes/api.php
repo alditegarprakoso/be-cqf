@@ -5,6 +5,7 @@ use App\Http\Controllers\DonationCategoryController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\DonatureListController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\KajianCategoryController;
 use App\Http\Controllers\KajianController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\UserController;
@@ -57,6 +58,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/programs', [ProgramController::class, 'store']);
     Route::post('/programs/{id}', [ProgramController::class, 'update']);
     Route::delete('/programs/{id}', [ProgramController::class, 'destroy']);
+
+    // Kajian Categories Routes
+    Route::get('/kajian-categories', [KajianCategoryController::class, 'index']);
+    Route::get('/kajian-categories/{id}', [KajianCategoryController::class, 'show']);
+    Route::post('/kajian-categories', [KajianCategoryController::class, 'store']);
+    Route::put('/kajian-categories/{id}', [KajianCategoryController::class, 'update']);
+    Route::delete('/kajian-categories/{id}', [KajianCategoryController::class, 'destroy']);
 
     // Kajian Routes
     Route::get('/kajian', [KajianController::class, 'index']);
