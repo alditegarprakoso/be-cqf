@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DonationCategoryController;
 use App\Http\Controllers\DonationController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,4 +32,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/donations', [DonationController::class, 'store']);
     Route::post('/donations/{id}', [DonationController::class, 'update']);
     Route::delete('/donations/{id}', [DonationController::class, 'destroy']);
+
+    // Groups Routes
+    Route::get('/groups', [GroupController::class, 'index']);
+    Route::get('/groups/{id}', [GroupController::class, 'show']);
+    Route::post('/groups', [GroupController::class, 'store']);
+    Route::post('/groups/{id}', [GroupController::class, 'update']);
+    Route::delete('/groups/{id}', [GroupController::class, 'destroy']);
 });

@@ -98,10 +98,10 @@ class DonationController extends Controller
     {
         try {
             $request->validate([
-                'category_id' => 'required|number|max:255',
+                'category_id' => 'required|string|max:255',
                 'title' => 'required|string|max:255',
                 'description' => 'nullable|string|max:255',
-                'target_amount' => 'required|number',
+                'target_amount' => 'required|string',
                 'bank_account' => 'required|string|max:255',
                 'status' => 'required|string|max:255',
                 'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
