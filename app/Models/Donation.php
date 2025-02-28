@@ -27,4 +27,16 @@ class Donation extends Model
     {
         return $this->hasMany(DonatureList::class);
     }
+
+    // Accessor untuk menghitung total donasi
+    public function getTotalCollectedAttribute(): int
+    {
+        return $this->donatureLists()->sum('total_donation');
+    }
+
+    // Accessor untuk cek apakah target tercapai
+    public function getIsTargetReachedAttribute(): bool
+    {
+        return $this->total_collected >= $this->target_amount;
+    }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Donation;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class DonationController extends Controller
 {
@@ -16,14 +17,17 @@ class DonationController extends Controller
             $search = $request->query('search', '');
 
             $donations = Donation::with('donationCategory')
+                ->withCount(['donatureLists as total_collected' => function ($query) {
+                    $query->select(DB::raw('COALESCE(SUM(total_donation), 0)')); // Biar kalau belum ada donasi, hasilnya tetap 0, bukan null.
+                }])
                 ->when($search, function ($query) use ($search) {
-                    return $query->where(function ($q) use ($search) {
-                        $q->where('title', 'like', "%$search%");
-                    });
-                })->paginate($perPage);
+                    return $query->where('title', 'like', "%$search%");
+                })
+                ->paginate($perPage);
 
             $donations->getCollection()->transform(function ($donation) {
                 $donation->thumbnail = $donation->thumbnail ? asset($donation->thumbnail) : $donation->thumbnail;
+                $donation->is_target_reached = $donation->total_collected >= $donation->target_amount;
                 return $donation;
             });
 
@@ -40,6 +44,7 @@ class DonationController extends Controller
             ], 500);
         }
     }
+
 
     public function show($id)
     {
