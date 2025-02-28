@@ -76,11 +76,12 @@ class DonationController extends Controller
                 'description' => 'nullable|string|max:255',
                 'target_amount' => 'required|string',
                 'bank_account' => 'required|string|max:255',
+                'due_date' => 'required|date',
                 'status' => 'required|string|max:255',
                 'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
 
-            $donationData = $request->only('category_id', 'title', 'description', 'target_amount', 'bank_account', 'status', 'thumbnail');
+            $donationData = $request->only('category_id', 'title', 'description', 'target_amount', 'bank_account', 'due_date', 'status', 'thumbnail');
 
             if ($request->hasFile('thumbnail')) {
                 $thumbnailPath = $request->file('thumbnail')->store('uploads/donation', 'public');
@@ -108,12 +109,13 @@ class DonationController extends Controller
                 'description' => 'nullable|string|max:255',
                 'target_amount' => 'required|string',
                 'bank_account' => 'required|string|max:255',
+                'due_date' => 'required|date',
                 'status' => 'required|string|max:255',
                 'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
 
             $donation = Donation::findOrFail($id);
-            $donationData = $request->only('category_id', 'title', 'description', 'target_amount', 'bank_account', 'status', 'thumbnail');
+            $donationData = $request->only('category_id', 'title', 'description', 'target_amount', 'bank_account', 'due_date', 'status', 'thumbnail');
 
             if ($request->hasFile('thumbnail')) {
                 if ($donation->thumbnail) {

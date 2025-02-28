@@ -14,6 +14,11 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+
+            if ($user) {
+                $user->photo = $user->photo ? asset($user->photo) : $user->photo;
+            }
+
             $token = $user->createToken('authToken')->plainTextToken;
 
             return response()->json([

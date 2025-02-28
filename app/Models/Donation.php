@@ -14,6 +14,7 @@ class Donation extends Model
         'description',
         'target_amount',
         'bank_account',
+        'due_date',
         'status',
         'thumbnail',
     ];

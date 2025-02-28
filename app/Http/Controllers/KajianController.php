@@ -73,7 +73,7 @@ class KajianController extends Controller
                 'is_live' => 'required|string',
                 'url' => 'nullable|string|max:255',
                 'status' => 'required|string|max:255',
-                'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
             ]);
 
             $kajianData = $request->only('category_id', 'title', 'subtitle', 'description', 'datetime', 'is_live', 'url', 'status', 'thumbnail');

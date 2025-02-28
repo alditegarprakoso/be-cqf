@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('target_amount');
             $table->string('bank_account');
+            $table->date('due_date');
             $table->string('status')->nullable();
             $table->string('thumbnail')->nullable();
             $table->timestamps();
