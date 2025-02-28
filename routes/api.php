@@ -4,7 +4,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DonationCategoryController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\KajianController;
+use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\UserController;
+use App\Models\Kajian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,4 +42,18 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/groups', [GroupController::class, 'store']);
     Route::post('/groups/{id}', [GroupController::class, 'update']);
     Route::delete('/groups/{id}', [GroupController::class, 'destroy']);
+
+    // Program Route
+    Route::get('/programs', [ProgramController::class, 'index']);
+    Route::get('/programs/{id}', [ProgramController::class, 'show']);
+    Route::post('/programs', [ProgramController::class, 'store']);
+    Route::post('/programs/{id}', [ProgramController::class, 'update']);
+    Route::delete('/programs/{id}', [ProgramController::class, 'destroy']);
+
+    // Kajian Routes
+    Route::get('/kajian', [KajianController::class, 'index']);
+    Route::get('/kajian/{id}', [KajianController::class, 'show']);
+    Route::post('/kajian', [KajianController::class, 'store']);
+    Route::post('/kajian/{id}', [KajianController::class, 'update']);
+    Route::delete('/kajian/{id}', [KajianController::class, 'destroy']);
 });
