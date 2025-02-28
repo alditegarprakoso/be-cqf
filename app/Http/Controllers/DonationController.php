@@ -115,7 +115,7 @@ class DonationController extends Controller
                     Storage::disk('public')->delete($donation->thumbnail);
                 }
 
-                $thumbnailPath = $request->file('thumbnail')->store('uploads/user', 'public');
+                $thumbnailPath = $request->file('thumbnail')->store('uploads/donation', 'public');
                 $donationData['thumbnail'] = 'storage/' . $thumbnailPath;
             }
 

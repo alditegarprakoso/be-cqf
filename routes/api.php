@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DonationCategoryController;
 use App\Http\Controllers\DonationController;
+use App\Http\Controllers\DonatureListController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\KajianController;
 use App\Http\Controllers\ProgramController;
@@ -35,6 +36,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/donations', [DonationController::class, 'store']);
     Route::post('/donations/{id}', [DonationController::class, 'update']);
     Route::delete('/donations/{id}', [DonationController::class, 'destroy']);
+
+    // Donature Routes
+    Route::get('donatures', [DonatureListController::class, 'index']);
+    Route::get('donatures/{id}', [DonatureListController::class, 'show']);
+    Route::post('donatures', [DonatureListController::class, 'store']);
+    Route::post('donatures/{id}', [DonatureListController::class, 'update']);
+    Route::delete('donatures/{id}', [DonatureListController::class, 'destroy']);
 
     // Groups Routes
     Route::get('/groups', [GroupController::class, 'index']);

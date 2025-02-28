@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Donation extends Model
 {
@@ -20,5 +21,10 @@ class Donation extends Model
     public function donationCategory(): BelongsTo
     {
         return $this->belongsTo(DonationCategory::class, 'category_id');
+    }
+
+    public function donatureLists(): HasMany
+    {
+        return $this->hasMany(DonatureList::class);
     }
 }
