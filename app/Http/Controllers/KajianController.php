@@ -167,6 +167,10 @@ class KajianController extends Controller
 
     public function homepage($categoryId = null)
     {
+        if ($categoryId == 'all') {
+            $categoryId = null;
+        }
+
         $kajians = Kajian::where('status', 'Aktif')
             ->when($categoryId, function ($query) use ($categoryId) {
                 return $query->where('category_id', $categoryId);

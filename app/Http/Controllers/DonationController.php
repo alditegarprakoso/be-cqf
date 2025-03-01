@@ -169,6 +169,10 @@ class DonationController extends Controller
 
     public function homepage($categoryId = null)
     {
+        if ($categoryId == 'all') {
+            $categoryId = null;
+        }
+
         try {
             $donation = Donation::with('donationCategory')
                 ->withCount(['donatureLists as total_collected' => function ($query) {
