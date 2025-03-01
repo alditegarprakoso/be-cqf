@@ -166,4 +166,30 @@ class DonationController extends Controller
             ], 500);
         }
     }
+
+    public function homepage($categoryId = null)
+    {
+        try {
+            $donation = Donation::with('donationCategory')
+                ->withCount(['donatureLists as total_collected' => function ($query) {
+                    $query->select(DB::raw('COALESCE(SUM(total_donation), 0)')); // Biar kalau belum ada donasi, hasilnya tetap 0, bukan null.
+                }])
+                ->orderBy('created_at', 'desc')
+                ->where('status', 'Aktif')
+                ->when($categoryId, function ($query) use ($categoryId) {
+                    return $query->where('category_id', $categoryId);
+                })
+                ->get();
+
+            $donation->transform(function ($donation) {
+                $donation->thumbnail = $donation->thumbnail ? asset($donation->thumbnail) : $donation->thumbnail;
+                $donation->is_target_reached = $donation->total_collected >= $donation->target_amount;
+                return $donation;
+            });
+
+            return $donation;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }

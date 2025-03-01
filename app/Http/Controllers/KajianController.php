@@ -164,4 +164,20 @@ class KajianController extends Controller
             ], 500);
         }
     }
+
+    public function homepage($categoryId = null)
+    {
+        $kajians = Kajian::where('status', 'Aktif')
+            ->when($categoryId, function ($query) use ($categoryId) {
+                return $query->where('category_id', $categoryId);
+            })
+            ->get();
+
+        $kajians->transform(function ($kajian) {
+            $kajian->thumbnail = $kajian->thumbnail ? asset($kajian->thumbnail) : $kajian->thumbnail;
+            return $kajian;
+        });
+
+        return $kajians;
+    }
 }

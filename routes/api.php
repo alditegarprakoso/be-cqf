@@ -5,6 +5,7 @@ use App\Http\Controllers\DonationCategoryController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\DonatureListController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KajianCategoryController;
 use App\Http\Controllers\KajianController;
 use App\Http\Controllers\ProgramController;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+Route::get('/homepage', [HomeController::class, 'index']);
 
 Route::middleware('auth:sanctum')->group(function () {
     // User Routes

@@ -148,4 +148,16 @@ class GroupController extends Controller
             ], 500);
         }
     }
+
+    public function homepage()
+    {
+        $groups = Group::where('status', 'Aktif')->get();
+
+        $groups->transform(function ($group) {
+            $group->logo = $group->logo ? asset($group->logo) : $group->logo;
+            return $group;
+        });
+
+        return $groups;
+    }
 }

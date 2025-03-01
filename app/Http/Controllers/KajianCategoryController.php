@@ -125,4 +125,14 @@ class KajianCategoryController extends Controller
             ], 500);
         }
     }
+
+    public function homepage()
+    {
+        try {
+            $categories = KajianCategory::where('status', 'Aktif')->get();
+            return $categories;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }

@@ -126,4 +126,14 @@ class DonationCategoryController extends Controller
             ], 500);
         }
     }
+
+    public function homepage()
+    {
+        try {
+            $categories = DonationCategory::where('status', 'Aktif')->get();
+            return $categories;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }

@@ -152,4 +152,24 @@ class ProgramController extends Controller
             ], 500);
         }
     }
+
+    public function homepage()
+    {
+        try {
+            $programs = Program::where('status', 'Aktif')->get();
+
+            $programs->transform(function ($program) {
+                $program->thumbnail = $program->thumbnail ? asset($program->thumbnail) : $program->thumbnail;
+                return $program;
+            });
+
+            return $programs;
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data program',
+                'errors' => $e->getMessage(),
+            ], 500);
+        }
+    }
 }
